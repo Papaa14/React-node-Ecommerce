@@ -1,0 +1,58 @@
+.sidebar {
+  position: relative;
+}
+button {
+  cursor: pointer;
+  background-color: blue;
+  border: none;
+  font-size: 20px;
+}
+.toggle {
+  position: fixed;
+  left: 20px;
+  top: 80px;
+  cursor: pointer;
+  background-color: gray;
+  border: none;
+}
+.menu-nav {
+  list-style: none;
+  position: absolute;
+  background: #1d2634;
+  overflow: hidden;
+  left: 0;
+  width: 0;  
+  max-width: 250px;
+  z-index: 9;
+  font-size: 18px;
+  box-shadow: 0 10px 15px -3px rgb(46 41 51 / 8%), 0 4px 6px -2px rgb(71 63 79 / 16%);
+  transform: translateX(-100px);
+  transition: transform ease-in-out 0.2s;
+  top: 120px;
+  
+  /* transition: width ease 0.2s; */
+}
+.menu-nav.show-menu :hover{
+  background-color: lightslategray;
+
+}
+.menu-nav.show-menu {
+ width: 80%;
+  transform: translateX(0px);
+}
+.menu-nav.show-menu li {
+  display: block;
+  padding: 1rem;
+}
+
+
+@property --_w {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 100vw; 
+}
+@property --_h {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 100vh; 
+}

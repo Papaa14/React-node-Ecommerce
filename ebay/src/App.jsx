@@ -1,35 +1,63 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Assuming you're using axios for API calls
+import './styles/App.css';
+import Navbar from './components/Navbar';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { AppProvider } from './components/AppContext';
+import Home from './pages/Home';
+import Shoes from './pages/shoes';
+import ContactUs from './pages/ContactUs';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Cart from './pages/Cart';
+import Footer from './components/Footer';
+import ProductPage from './pages/ProductPage';
+import Checkout from './pages/Checkout';
+import Admin from './pages/Admin/App';
+import Users from './pages/Admin/Users';
+import ParentLayout from './pages/Admin/Outlets';
+import Orders from './pages/Admin/Orders';
+import Products from './pages/Admin/Products';
+import Rproducts from './pages/Admin/Rproducts';
 
-function PostList() {
-  const [posts, setPosts] = useState([]);
+
+
+
+function App() {
+  const location = useLocation();
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get('http://localhost:9091/notes'); // Replace with your API endpoint
-        setPosts(response.data);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
-    };
-
-    fetchPosts();
-  }, []);
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
-    <div>
-      <h1>Post List</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}> 
-            <h3>{post.title}</h3> 
-            <p>{post.contents}</p> 
-          </li>
-        ))}
-      </ul>
-    </div>
+    <AppProvider>
+      <Navbar />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/shoes" element={<Shoes />} />      
+        <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/product/:productId" element={<ProductPage />} />
+        <Route path="/Rproducts" element={<Rproducts />} />
+        {/* Admin Parent Route with Child Routes */}
+        <Route path="/admin" element={<ParentLayout />}>
+          <Route index element={<Admin />} />
+          <Route path="users" element={<Users />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="products" element={<Products />} />
+       
+          {/* Add other admin child routes here */}
+        </Route>
+
+      </Routes>
+
+
+      {location.pathname !== '/admin' && location.pathname !== '/Rproducts' && <Footer />}
+    </AppProvider>
   );
 }
 
-export default PostList;
+export default App
