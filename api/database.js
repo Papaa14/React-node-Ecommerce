@@ -20,9 +20,14 @@ export async function getNoteById(id) {
     const [[note]] = await pool.query('SELECT * FROM notes WHERE id = ?', [id]);
     return note;
 }
+
+export async function getUserById(id) {
+    const [[user]] = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
+    return user;
+}
 export async function getUser() {
-    const [[rows]] = await pool.query('SELECT * FROM users');
-    return rows;
+    const [users] = await pool.query('SELECT * FROM users');
+    return users;
 }
 
 export async function createNote(title, contents) {

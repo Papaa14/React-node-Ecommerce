@@ -1,5 +1,5 @@
 import express from 'express';
-import { getNotes, getNoteById, createNote,register,getUser } from './database.js';
+import { getNotes, getNoteById, createNote,register,getUser ,getUserById} from './database.js';
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
 
@@ -31,8 +31,12 @@ app.post('/register', async (req, res) => {
     const newUser = await register(name,username,email,phone,password,address);
     res.status(201).json(newUser);
 });
-app.get('/users', async (req, res) => {
-    const user = await getUser(req.params.id);
+app.get('/Users', async (req, res) => {
+    const users = await getUser();
+    res.json(users);
+});
+app.get('/Users/:id', async (req, res) => {
+    const user = await getUserById(req.params.id);
     res.json(user);
 });
 

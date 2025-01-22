@@ -129,7 +129,7 @@ function SignupForm() {
 
         if (responseData.message === "Signed up Successfully") {
           setSignedUp(true);
-          setTimeout(() => navigate('/login'),3000);
+         
         }
       })
       .catch((error) => {
