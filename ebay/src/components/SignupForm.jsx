@@ -123,12 +123,15 @@ function SignupForm() {
       })
       .then((response) => {
         const responseData = response.data;
+        const signedup = responseData.signedup;
+        setSignedUp(signedup);
         setMessage(responseData.message);
         setNotificationText(response.data.message);
         setShowNotification(true);
 
         if (responseData.message === "Signed up Successfully") {
           setSignedUp(true);
+          
          
         }
       })

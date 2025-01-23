@@ -12,14 +12,22 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function LoginForm() {
   const [formData, setFormData] = useState({
-    login_username_email: "",
-    login_password: "",
+    email: "",
+    password: "",
   });
 
   const { isUserLogged, setIsUserLogged, handleLoginToken } = useContext(AppContext);
   const [showNotification, setShowNotification] = useState(false);
   const [notificationText, setNotificationText] = useState("");
   const navigate = useNavigate();
+
+  const closeNotification = () => {
+    setShowNotification(false);
+    setNotificationText("");
+    if (isUserLogged) {
+      navigate("/", { replace: true });
+    }
+  };
 
 const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -55,8 +63,15 @@ const handleClickShowPassword = () => {
       data.append(key, value);
     });
 
-    axios
-      .post("/login2.php", data)
+   axios
+         .post("http://localhost:9091/login", {
+           email: formData.email,      
+           password: formData.password,          
+         }, {
+           headers: {
+             'Content-Type': 'application/json',
+           },
+         })
       .then((response) => {
         console.log("Raw response data:", response.data);
         try {
@@ -66,18 +81,22 @@ const handleClickShowPassword = () => {
           setNotificationText(jsonResponse.message);
           setShowNotification(true);
 
-          if (loggedIn) {
-            handleLoginToken(jsonResponse.token);
-            localStorage.setItem("user", JSON.stringify(jsonResponse.user));
+        
 
-            // Check user type and redirect to different pages
-            const userType = jsonResponse.user.type;
-            if (userType === "admin") {
-              navigate("/admin", { replace: true });
-            } else {
-              navigate("/", { replace: true });
+            // Check user type and redirect to different pages and jwt token
+            if (loggedIn) {
+              handleLoginToken(jsonResponse.token);
+              localStorage.setItem("user", JSON.stringify(jsonResponse.user));
+  
+              // Check user type and redirect to different pages
+              const userType = jsonResponse.user.type;
+              if (userType === "admin") {
+                navigate("/admin", { replace: true });
+              } else {
+                navigate("/", { replace: true });
+              }
             }
-          }
+          
         } catch (error) {
           console.error("Error parsing JSON:", error);
           setNotificationText("An error occurred while processing your request.");
@@ -99,25 +118,25 @@ const handleClickShowPassword = () => {
           <div>
             <label htmlFor="login_username_email">Username or email</label>
             <input
-              id="login_username_email"
+              id="email"
               onChange={handleChange}
-              value={formData.login_username_email}
+              value={formData.email}
               type="text"
               placeholder="Username or Email"
-              name="login_username_email"
+              name="email"
               required
             />
           </div>
           <div>
             <label htmlFor="login_password">Password</label>
             <TextField
-              id="login_password"
+              id="password"
               onChange={handleChange}
-              value={formData.login_password}
+              value={formData.password}
               type={passwordVisible ? "text" : "password"}
               onClick={handleClickShowPassword} 
               placeholder="password"
-              name="login_password"
+              name="password"
               required
               InputProps={{
                 endAdornment:(
@@ -150,10 +169,6 @@ const handleClickShowPassword = () => {
   );
 }
 
-const closeNotification = () => {
-  setShowNotification(false);
-  setNotificationText("");
-  navigate( "/", { replace: true });
-};
+
 
 export default LoginForm;

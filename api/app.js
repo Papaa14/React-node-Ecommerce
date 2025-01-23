@@ -1,9 +1,9 @@
 import express from 'express';
-import { getNotes, getNoteById, createNote,register,getUser ,getUserById} from './database.js';
+import { getNotes, getNoteById, createNote,register,getUser ,getUserById,login} from './database.js';
 import cors from 'cors'
-import jwt from 'jsonwebtoken'
-
 import cookieParser from 'cookie-parser';
+
+ 
 
 const app = express();
 app.use(express.json());
@@ -31,6 +31,19 @@ app.post('/register', async (req, res) => {
     const newUser = await register(name,username,email,phone,password,address);
     res.status(201).json(newUser);
 });
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    const result = await login(email, password);
+    
+    if (result.success) {
+           // Optional: Set up session or generate JWT
+        res.cookie('token', result.token, { httpOnly: true, secure: false,sameSite:'strict',maxAge: 86400 }); 
+   
+      res.json(result);
+    } else {
+      res.status(401).json(result);
+    }
+  });
 app.get('/Users', async (req, res) => {
     const users = await getUser();
     res.json(users);

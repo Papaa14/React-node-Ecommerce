@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './../styles/Notifaction.css';
 
-const Notification = ({ text, onClose, show}) => {
+const Notification = ({ text, onClose, show }) => {
   const [showNotification, setShowNotification] = useState(false);
   useEffect(() => {
     setShowNotification(show)
