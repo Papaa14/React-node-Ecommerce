@@ -4,6 +4,7 @@ import "../styles/base.css";
 import "../styles/Navbar.css";
 import { AppContext } from "./AppContext";
 import { FiLogOut, FiMenu, FiX } from "react-icons/fi";
+import { TbMessageCircle } from "react-icons/tb";
 
 function Navbar() {
   const { isUserLogged, handleLogout } = useContext(AppContext);
@@ -36,6 +37,7 @@ function Navbar() {
       ) : (
         <>
           <li><NavLink to="/cart"><img src="./../src/assets/shopping-cart.svg" width="30px" alt="Cart" /></NavLink></li>
+          <li><NavLink to="/cart"><TbMessageCircle size={30}/></NavLink></li>
           <li><NavLink to="/checkout">Checkout</NavLink></li>
           <li><span className="navlinkName">Hello {user.username || "Guest"}</span></li>
         </>

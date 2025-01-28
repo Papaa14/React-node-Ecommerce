@@ -133,6 +133,8 @@ function SignupForm() {
           setSignedUp(true);
           
          
+        }else{
+          setSignedUp(false);
         }
       })
       .catch((error) => {

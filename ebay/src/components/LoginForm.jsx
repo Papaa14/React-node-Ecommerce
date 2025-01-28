@@ -116,13 +116,13 @@ const handleClickShowPassword = () => {
         <h2 className="login-title">Log in</h2>
         <form className="login-form" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="login_username_email">Username or email</label>
+            <label htmlFor="login_username_email">Email</label>
             <input
               id="email"
               onChange={handleChange}
               value={formData.email}
               type="text"
-              placeholder="Username or Email"
+              placeholder="Enter your Email"
               name="email"
               required
             />

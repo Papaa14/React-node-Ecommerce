@@ -23,19 +23,50 @@ export async function getNoteById(id) {
     return note;
 }
 
+export async function getUser() {
+  const [users] = await pool.query('SELECT * FROM users');
+  return users;
+}
+
 export async function getUserById(id) {
     const [[user]] = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
     return user;
 }
-export async function getUser() {
-    const [users] = await pool.query('SELECT * FROM users');
-    return users;
+
+export async function getMessages() {
+  const [rows] = await pool.query('SELECT * FROM messages');
+  return rows;
 }
+export async function getMessageById(id) {
+  const [[message]] = await pool.query('SELECT * FROM messages WHERE id = ?', [id]);
+  return message;
+}
+
 
 export async function createNote(title, contents) {
     const [result] = await pool.query('INSERT INTO notes (title, contents) VALUES (?, ?)', [title, contents]);
     return getNoteById(result.insertId);
 }
+
+export async function createMessage(name, email, messageContent) {
+  try{  
+  const [result] = await pool.query('INSERT INTO messages (name, email, message) VALUES (?, ?, ?)', [name, email, messageContent]);
+  const messageId = result.insertId;
+  return {
+    messageSent: true,
+    message: "Message sent successfully",
+    messageId,
+  };
+}catch (error) {
+    // Handle errors (e.g., unique constraint violations)
+    console.error("Error sending message:", error);
+    return {
+        success: false,
+        message: "Message not sent, Please try again.",
+    };
+}
+}
+
 
 export async function register(name, username, email, phone, password, address) {
     try {

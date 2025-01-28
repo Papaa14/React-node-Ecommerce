@@ -1,5 +1,5 @@
 import express from 'express';
-import { getNotes, getNoteById, createNote,register,getUser ,getUserById,login} from './database.js';
+import { getNotes, getNoteById, createNote,register,getUser ,getUserById,login,createMessage,getMessageById, getMessages} from './database.js';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 
@@ -11,21 +11,37 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(cookieParser())
 
+//All about notes 
 app.get('/notes', async (req, res) => {
     const notes = await getNotes();
     res.json(notes);
-});
- 
+}); 
 app.get('/notes/:id', async (req, res) => {
     const note = await getNoteById(req.params.id);
     res.json(note);
 });
-
 app.post('/notes', async (req, res) => {
     const { title, contents } = req.body;
     const newNote = await createNote(title, contents);
     res.status(201).json(newNote);
 });
+
+//All about messages
+app.get('/messages/:id', async (req, res) => {
+    const message = await getMessageById(req.params.id);
+    res.json(message);
+});
+app.get('/messages', async (req, res) => {
+    const message = await getMessages();
+    res.json(message);
+});
+app.post('/messages', async (req, res) => {
+    const { name,email,messageContent } = req.body;
+    const newMessage = await createMessage(name,email,messageContent);
+    res.status(201).json(newMessage);
+});
+
+//All about users
 app.post('/register', async (req, res) => {
     const {name,username,email,phone,password,address} = req.body;
     const newUser = await register(name,username,email,phone,password,address);
