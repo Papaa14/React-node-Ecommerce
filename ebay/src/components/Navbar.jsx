@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink, useNavigate } from 'react-router-dom';
 import "../styles/base.css";
 import "../styles/Navbar.css";
 import { AppContext } from "./AppContext";
 import { FiLogOut, FiMenu, FiX } from "react-icons/fi";
 import { TbMessageCircle } from "react-icons/tb";
+import axios from "./axios";
 
 function Navbar() {
   const { isUserLogged, handleLogout } = useContext(AppContext);
@@ -12,6 +13,15 @@ function Navbar() {
   const navigate = useNavigate();
   
   const [isOpen, setIsOpen] = useState(false);
+  const [unreadCount,setUnreadCount] = useState(0);
+ 
+  useEffect(() => {
+    if (isUserLogged) {
+      axios.get('/messages/unread')
+        .then(res => setUnreadCount(res.data.count))
+        .catch(console.error);
+    }
+  }, [isUserLogged]);
 
   function logOut() {
     handleLogout();
@@ -37,7 +47,9 @@ function Navbar() {
       ) : (
         <>
           <li><NavLink to="/cart"><img src="./../src/assets/shopping-cart.svg" width="30px" alt="Cart" /></NavLink></li>
-          <li><NavLink to="/cart"><TbMessageCircle size={30}/></NavLink></li>
+          <li><NavLink to="/messages" className="message-icon"><TbMessageCircle size={30}/> {unreadCount > 0 && (
+          <span className="notification-badge">{unreadCount}</span>
+        )}</NavLink></li>
           <li><NavLink to="/checkout">Checkout</NavLink></li>
           <li><span className="navlinkName">Hello {user.username || "Guest"}</span></li>
         </>

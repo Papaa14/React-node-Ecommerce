@@ -109,7 +109,7 @@ function SignupForm() {
     });
 
     axios
-      .post("http://localhost:9091/register", {
+      .post('/register', {
         name: formData.name,
         username: formData.username,
         email: formData.email,
