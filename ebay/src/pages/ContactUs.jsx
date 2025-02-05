@@ -34,7 +34,7 @@ function ContactUs() {
         data.append('email', formData.email);
         data.append('messageContent', formData.messageContent);
 
-        axios.post("http://localhost:9091/messages", {
+        axios.post('/messages', {
             name: formData.name,
             email: formData.email,
             messageContent: formData.messageContent

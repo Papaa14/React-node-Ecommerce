@@ -1,5 +1,5 @@
 import express from 'express';
-import { getNotes, getNoteById, createNote,register,getUser ,getUserById,login,createMessage,getMessageById, getMessages} from './database.js';
+import { getNotes, getNoteById, createNote,register,getUser ,getUserById,login,createMessage,getMessageById, getMessages,getUnreadMessage} from './database.js';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 
@@ -33,6 +33,10 @@ app.get('/messages/:id', async (req, res) => {
 });
 app.get('/messages', async (req, res) => {
     const message = await getMessages();
+    res.json(message);
+});
+app.get('/messages/unread', async (req, res) => {
+    const message = await getUnreadMessage();
     res.json(message);
 });
 app.post('/messages', async (req, res) => {

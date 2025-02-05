@@ -18,6 +18,7 @@ import ParentLayout from './pages/Admin/Outlets';
 import Orders from './pages/Admin/Orders';
 import Products from './pages/Admin/Products';
 import Rproducts from './pages/Admin/Rproducts';
+import MesssagesPage from './pages/messages';
 
 
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/messages" element={<MesssagesPage />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/product/:productId" element={<ProductPage />} />
         <Route path="/Rproducts" element={<Rproducts />} />

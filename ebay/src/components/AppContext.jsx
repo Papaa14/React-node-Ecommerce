@@ -6,6 +6,7 @@ const AppProvider = ({ children }) => {
   const [isUserLogged, setIsUserLogged] = useState(false);
   const savedLoggedIn = localStorage.getItem("isUserLogged");
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
+  const [email, setEmail] = useState(JSON.parse(localStorage.getItem("email")) || null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem("cartItems")) || []);
 
@@ -44,7 +45,9 @@ const AppProvider = ({ children }) => {
         cartItems,
         setCartItems,
         user,
-        setUser
+        setUser,
+        email,
+        setEmail
       }}
     >
       {children}

@@ -93,7 +93,7 @@ const handleClickShowPassword = () => {
               if (userType === "admin") {
                 navigate("/admin", { replace: true });
               } else {
-                navigate("/", { replace: true });
+              navigate("/", { replace: true });
               }
             }
           

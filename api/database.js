@@ -41,6 +41,21 @@ export async function getMessageById(id) {
   const [[message]] = await pool.query('SELECT * FROM messages WHERE id = ?', [id]);
   return message;
 }
+export async function getUnreadMessage(){
+  const [count] = await pool.query(
+    'SELECT COUNT(*) AS count FROM messages WHERE is_read = false'
+  );
+  res.json({ count: count[0].count });
+};
+export async function getReplies(req, res){
+  const [messages] = await pool.query(`
+    SELECT m.*, r.reply, r.created_at AS reply_date 
+    FROM messages m
+    LEFT JOIN replies r ON m.id = r.message_id
+    ORDER BY m.created_at DESC
+  `);
+  res.json(messages);
+};
 
 
 export async function createNote(title, contents) {
@@ -139,9 +154,9 @@ export async function login(email, password) {
         loggedin:true,
         token: token,
         user: {
-          id: user.id,
-          name: user.name,
+          id: user.id,         
           username: user.username,
+          email: user.email,
           type: user.type
         }
       };
