@@ -75,9 +75,12 @@ function SignupForm() {
   }
 
   const [passwordVisible, setPasswordVisible] = useState(false);
-
+  const [passwordVisible2, setPasswordVisible2] = useState(false);
   const handleClickShowPassword = () => {
     setPasswordVisible(!passwordVisible);
+  };
+  const handleClickShowPassword2 = () => {
+    setPasswordVisible2(!passwordVisible2);
   };
 
   const handleChange = (e) => {
@@ -236,21 +239,21 @@ function SignupForm() {
               <label htmlFor="password2">Repeat Password</label>
               <TextField
                 id="password2"
-                type={passwordVisible ? "text" : "password"}
+                type={passwordVisible2 ? "text" : "password"}
                 placeholder="Repeat Password"
                 name="password2"
                 value={formData.password2}
                 onChange={handleChange}
-                onClick={handleClickShowPassword}
+                onClick={handleClickShowPassword2}
                 required
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
+                        onClick={handleClickShowPassword2}
                       >
-                        {passwordVisible ? <Visibility /> : <VisibilityOff />}
+                        {passwordVisible2 ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
                   ),
