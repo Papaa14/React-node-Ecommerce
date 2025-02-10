@@ -13,26 +13,30 @@ const pool = mysql.createPool({
     database: process.env.MYSQL_DATABASE,
 });
 
+//get notes
 export async function getNotes() {
     const [rows] = await pool.query('SELECT * FROM notes');
     return rows;
 }
-
 export async function getNoteById(id) {
     const [[note]] = await pool.query('SELECT * FROM notes WHERE id = ?', [id]);
     return note;
 }
 
+//get users
 export async function getUser() {
-  const [users] = await pool.query('SELECT * FROM users');
-  return users;
+  const [users] = await pool.query('SELECT * FROM users WHERE `type` = "user"');
+  return users; 
 }
-
 export async function getUserById(id) {
     const [[user]] = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
     return user;
 }
-
+export async function CountUsers() {
+  const [[user]] = await pool.query('SELECT COUNT(*) AS userCount FROM users WHERE `type` = "user"');
+  return user;
+}
+//get messages
 export async function getMessages() {
   const [rows] = await pool.query('SELECT * FROM messages');
   return rows;
@@ -55,14 +59,11 @@ export async function getReplies(req, res){
     ORDER BY m.created_at DESC
   `);
   res.json(messages);
-};
-
-
+}
 export async function createNote(title, contents) {
     const [result] = await pool.query('INSERT INTO notes (title, contents) VALUES (?, ?)', [title, contents]);
     return getNoteById(result.insertId);
 }
-
 export async function createMessage(name, email, messageContent) {
   try{  
   const [result] = await pool.query('INSERT INTO messages (name, email, message) VALUES (?, ?, ?)', [name, email, messageContent]);
@@ -82,7 +83,7 @@ export async function createMessage(name, email, messageContent) {
 }
 }
 
-
+//register and login
 export async function register(name, username, email, phone, password, address) {
     try {
         const saltRounds = 10;

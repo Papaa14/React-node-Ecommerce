@@ -13,7 +13,7 @@ function Home() {
 
   useEffect(() => {
     // Fetch user count data
-    axios.get("/user.php") // Replace with your actual API path
+    axios.get('/user') // Replace with your actual API path
       .then((response) => {
         const data = response.data;
         if (data.error) {

@@ -1,5 +1,5 @@
 import express from 'express';
-import { getNotes, getNoteById, createNote,register,getUser ,getUserById,login,createMessage,getMessageById, getMessages,getUnreadMessage} from './database.js';
+import { getNotes, getNoteById, createNote,register,getUser ,getUserById,login,createMessage,getMessageById, getMessages,getUnreadMessage, CountUsers} from './database.js';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 
@@ -70,6 +70,10 @@ app.get('/Users', async (req, res) => {
 });
 app.get('/Users/:id', async (req, res) => {
     const user = await getUserById(req.params.id);
+    res.json(user);
+});
+app.get('/User', async (req, res) => {
+    const user = await CountUsers(req.params.id);
     res.json(user);
 });
 

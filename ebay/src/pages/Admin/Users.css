@@ -1,45 +1,53 @@
 table {
   border-collapse: collapse;
-  width: 80%; /* Adjusts for a sidebar but still takes up most of the width */
-  max-width: 100%; /* Prevents the table from exceeding the container */
-  background-color: #ddd;
-  margin-top: 120px;
+  width: 80%;
+  max-width: 100%;
+  background-color: white;  /* Changed from #ddd to white for better contrast */
+  margin-bottom: 30px;
   margin-left: 100px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);  /* Added subtle shadow */
 }
 
 th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  border: 1px solid #ccc;  /* Made border more visible */
+  padding: 12px;  /* Increased padding */
   text-align: left;
 }
 
 th {
-  background-color: #f0f0f0;
+  background-color: #4a90e2;  /* Changed to blue header */
+  color: white;  /* White text for contrast */
+  font-weight: bold;
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #f8f9fa;  /* Lighter alternating rows */
+}
+
+tr:hover {
+  background-color: #f5f5f5;  /* Added hover effect */
 }
 
 /* Media query for smaller screens */
 @media screen and (max-width: 768px) {
   table {
-    width: 100%; /* Adjusts to full width on smaller screens */
-    margin-left: 0; /* Removes margin to avoid cutoff */
+      width: 100%;
+      margin-left: 0;
   }
   
   th, td {
-    padding: 6px; /* Reduce padding for smaller screens */
+      padding: 8px;
   }
 }
 
 @property --_w {
   syntax: '<length>';
   inherits: true;
-  initial-value: 100vw; 
+  initial-value: 100vw;
 }
+
 @property --_h {
   syntax: '<length>';
   inherits: true;
-  initial-value: 100vh; 
+  initial-value: 100vh;
 }
